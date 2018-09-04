@@ -1,0 +1,88 @@
+#!/usr/bin/env php
+<?php
+$autoloads = [__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'];
+$loaded = array_reduce($autoloads, function ($result, $file) {
+    if ($result) {
+        return $result;
+    }
+
+    return file_exists($file) && require_once $file;
+});
+if (! $loaded) {
+    die(
+        'Install project dependencies first. You can run the following command:'.PHP_EOL.
+        'curl -s http://getcomposer.org/installer | php; php composer.phar install yaoguais/phpctags'.PHP_EOL
+    );
+}
+$optionsInfo = <<<EOF
+An enhanced definition and declaration jumper written in pure PHP for vim-php
+Usage: PHPJumpToDefinition options
+  -f, --file=FILE              file that needs to be parsed
+  -l, --line=LINE              line number where the keyword appear
+  -c, --column=COLUMN          column where the keyword appear
+  -k, --keyword=KEYWORD        keyword that needs to be analysed
+  -r, --root=ROOT              project root for finding functions and others
+  -a, --autoload=AUTOLOAD      user project autoload files, default 'vendor/autoload.php'
+  -h, --help                   print the help info and exit
+  -v, --version                print the version and exit 
+EOF;
+$options = getopt('f:l:c:k:r:a:hv', ['file:', 'line:', 'column:', 'keyword:', 'root:', 'autoload:', 'help', 'version']);
+$getOptions = function ($options, $keys, $default = null) {
+    foreach ($keys as $key) {
+        if (isset($options[$key])) {
+            return $options[$key];
+        }
+    }
+
+    return $default;
+};
+
+$file = $getOptions($options, ['file', 'f']);
+$line = $getOptions($options, ['line', 'l']);
+$column = $getOptions($options, ['column', 'p']);
+$keyword = $getOptions($options, ['keyword', 'k']);
+$root = $getOptions($options, ['root', 'r']);
+$autoload = $getOptions($options, ['autoload', 'a']);
+$help = $getOptions($options, ['help', 'h']);
+$version = $getOptions($options, ['version', 'v']);
+$keyword = preg_replace('/^[^$a-zA-Z0-9_]+/', '', $keyword);
+$keyword = preg_replace('/[^$a-zA-Z0-9_]+$/', '', $keyword);
+if (isset($help)) {
+    die($optionsInfo);
+}
+if (isset($version)) {
+    die('Version: 1.0.0'.PHP_EOL);
+}
+if (empty($file) || ! is_string($file) ||
+    ! is_numeric($line) || ! is_numeric($column) ||
+    empty($keyword) || ! is_string($keyword) ||
+    is_array($root) || is_array($autoload)) {
+    die($optionsInfo);
+}
+if ($root) {
+    if (! is_dir($root)) {
+        dir("directory is not exists: $root");
+    }
+    $root = rtrim($root, DIRECTORY_SEPARATOR);
+}
+$root = $root ? $root : null;
+if (! isset($autoload)) {
+    $autoload = 'vendor/autoload.php';
+}
+
+ob_start();
+try {
+    $parser = new \PhpCTags\Parser\Position();
+    $position = $parser->parse($file, $line, $column, $keyword, $root, $autoload);
+    if ($position) {
+        $result = "{$position->file} {$position->line} {$position->column}";
+    } else {
+        $result = "Error: keyword '$keyword' can't be parsed";
+    }
+} catch (\Exception $e) {
+    $result = 'Error: '.$e->getMessage();
+}
+ob_clean();
+
+echo $result;
+exit(0 === stripos($result, 'error') ? -1 : 0);
