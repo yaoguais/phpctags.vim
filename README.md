@@ -52,13 +52,14 @@ Install the\_silver\_searcher for quick searching:
 
 Finally add the bin dir into the system $PATH variable:
 
-    $ composer global require yaoguais/phpctags
-    $ export PATH=$HOME/.composer/vendor/bin:$PATH
+    $ git clone https://github.com/yaoguais/phpctags.vim.git
+    $ cd phpctags.vim && composer install
+    $ export PATH=$(pwd)/bin:$PATH
 
 
-# ROAD MAP
+# Road Map
 
-[ROADMAP](./ROADMAP.md)
+[Road Map](./ROADMAP.md)
 
 # Enjoy it
  
