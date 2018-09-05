@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Finder;
+namespace PhpCTags\Finder\Position;
 
-class Constant_
+class Constant_ implements Finder
 {
     public $root;
     public $namespace;

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Finder;
+namespace PhpCTags\Finder\Position;
 
-class ClassConstant extends Method
+class ClassConstant extends Method implements Finder
 {
     public function find()
     {

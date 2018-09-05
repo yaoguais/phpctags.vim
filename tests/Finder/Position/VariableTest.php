@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Finder;
+namespace Tests\Finder\Position;
 
 class VariableTest extends \Tests\BaseTest
 {
     public function testFindVariable()
     {
-        $root = realpath(__DIR__.'/../data');
+        $root = realpath(__DIR__.'/../../data');
         $cases = [
             [
                 // $foo = null
@@ -26,7 +26,7 @@ class VariableTest extends \Tests\BaseTest
         ];
 
         foreach ($cases as $i => $case) {
-            $finder = new \PhpCTags\Finder\Variable();
+            $finder = new \PhpCTags\Finder\Position\Variable();
             $finder->file = $case[0][0];
             $parser = new \PhpCTags\Parser\Token();
             $finder->tokens = $parser->parse(file_get_contents($case[0][0]));

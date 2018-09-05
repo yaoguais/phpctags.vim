@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Finder;
+namespace Tests\Finder\Position;
 
 class FunctionTest extends \Tests\BaseTest
 {
@@ -17,7 +17,7 @@ class FunctionTest extends \Tests\BaseTest
         ];
         foreach ($cases as $i => $case) {
             $this->assertEquals($case[1],
-                preg_match(\PhpCTags\Finder\Function_::CLASS_PATTERN, $case[0]),
+                preg_match(\PhpCTags\Finder\Position\Function_::CLASS_PATTERN, $case[0]),
                 "case #$i"
             );
         }
@@ -25,7 +25,7 @@ class FunctionTest extends \Tests\BaseTest
 
     public function testFindNoNamespace()
     {
-        $root = realpath(__DIR__.'/../data');
+        $root = realpath(__DIR__.'/../../data');
         $cases = [
             [
                 'input' => [$root, 'foo', null],
@@ -54,7 +54,7 @@ class FunctionTest extends \Tests\BaseTest
         ];
 
         foreach ($cases as $i => $case) {
-            $finder = new \PhpCTags\Finder\Function_();
+            $finder = new \PhpCTags\Finder\Position\Function_();
             $finder->root = $case['input'][0];
             $finder->name = $case['input'][1];
             $finder->namespace = $case['input'][2];
@@ -74,7 +74,7 @@ class FunctionTest extends \Tests\BaseTest
 
     public function testFindWithNamespace()
     {
-        $root = realpath(__DIR__.'/../data');
+        $root = realpath(__DIR__.'/../../data');
         $cases = [
             [
                 'input' => [$root, 'foo', 'Foo\\Bar'],
@@ -103,7 +103,7 @@ class FunctionTest extends \Tests\BaseTest
         ];
 
         foreach ($cases as $i => $case) {
-            $finder = new \PhpCTags\Finder\Function_();
+            $finder = new \PhpCTags\Finder\Position\Function_();
             $finder->root = $case['input'][0];
             $finder->name = $case['input'][1];
             $finder->namespace = $case['input'][2];

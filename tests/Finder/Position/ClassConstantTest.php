@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Finder;
+namespace Tests\Finder\Position;
 
 class ClassConstantTest extends \Tests\BaseTest
 {
     public function testFindClassConstant()
     {
-        $root = realpath(__DIR__.'/../data');
+        $root = realpath(__DIR__.'/../../data');
 
         $file = $root.'/class/constant.php';
         require_once $file;
@@ -23,7 +23,7 @@ class ClassConstantTest extends \Tests\BaseTest
         ];
 
         foreach ($cases as $i => $case) {
-            $finder = new \PhpCTags\Finder\ClassConstant();
+            $finder = new \PhpCTags\Finder\Position\ClassConstant();
             $finder->file = $case['input'][1];
             $finder->name = $case['input'][2];
             $finder->class = $case['input'][3];

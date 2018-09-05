@@ -24,7 +24,7 @@ class Type_
         $varParser = new \PhpCTags\Parser\Variable();
         list($ok) = $varParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Variable();
+            $finder = new \PhpCTags\Finder\Position\Variable();
             $finder->tokens = $tokens;
             $finder->index = $idx;
 
@@ -34,7 +34,7 @@ class Type_
         $funcParser = new \PhpCTags\Parser\Function_();
         list($ok, $name, $namespace) = $funcParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Function_();
+            $finder = new \PhpCTags\Finder\Position\Function_();
             $finder->name = $name;
             $finder->namespace = $namespace;
 
@@ -44,7 +44,7 @@ class Type_
         $methodParser = new \PhpCTags\Parser\Method();
         list($ok, $name, $class, $namespace) = $methodParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Method();
+            $finder = new \PhpCTags\Finder\Position\Method();
             $finder->name = $name;
             $finder->class = $class;
             $finder->namespace = $namespace;
@@ -55,7 +55,7 @@ class Type_
         $classConstParser = new \PhpCTags\Parser\ClassConstant();
         list($ok, $name, $class, $namespace) = $classConstParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\ClassConstant();
+            $finder = new \PhpCTags\Finder\Position\ClassConstant();
             $finder->name = $name;
             $finder->class = $class;
             $finder->namespace = $namespace;
@@ -66,7 +66,7 @@ class Type_
         $constParser = new \PhpCTags\Parser\Constant_();
         list($ok, $name, $namespace) = $constParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Constant_();
+            $finder = new \PhpCTags\Finder\Position\Constant_();
             $finder->name = $name;
             $finder->namespace = $namespace;
 

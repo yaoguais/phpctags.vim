@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Finder;
+namespace PhpCTags\Finder\Position;
 
-class Variable
+class Variable implements Finder
 {
     public $file;
     public $tokens;

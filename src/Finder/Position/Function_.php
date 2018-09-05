@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Finder;
+namespace PhpCTags\Finder\Position;
 
-class Function_
+class Function_ implements Finder
 {
     public $root;
     public $namespace;
