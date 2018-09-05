@@ -50,67 +50,8 @@ class Function_
         }
 
         $name = is_array($tokens[$idx]) ? $tokens[$idx][1] : $tokens[$idx];
+        $nsParser = new Namespace_();
 
-        return $this->parseName($name, $namespace, $content, $line);
-    }
-
-    public function parseName($name, $namespace, $content, $line)
-    {
-        $root = 0 == strncmp($namespace, '\\', 1);
-        if ($namespace) {
-            $namespace = trim($namespace, '\\');
-            $namespace = $namespace ? $namespace : null;
-        }
-
-        if ($root) {
-            return [true, $name, $namespace];
-        }
-
-        $startLine = 0;
-        $nsFinder = new \PhpCTags\Finder\Namespace_();
-        $nsInfo = $nsFinder->find($content, $line);
-        if ($nsInfo) {
-            $startLine = $nsInfo[1];
-        }
-
-        if (! $namespace) {
-            $alias = $name;
-        } else {
-            $parts = explode('\\', $namespace);
-            $alias = $parts[0];
-        }
-
-        $useFinder = new \PhpCTags\Finder\Use_();
-        $use = $useFinder->find($alias,
-            [\PhpParser\Node\Stmt\Use_::TYPE_NORMAL, \PhpParser\Node\Stmt\Use_::TYPE_FUNCTION],
-            $content, $startLine, $line
-        );
-
-        if (! $use) {
-            if (! $nsInfo) {
-                if (! $namespace) {
-                    return [true, $name, null];
-                } else {
-                    return [true, $name, $namespace];
-                }
-            } else {
-                if (! $namespace) {
-                    return [true, $name, $nsInfo[0]];
-                } else {
-                    return [true, $name, $nsInfo[0].'\\'.$namespace];
-                }
-            }
-        }
-
-        if (! $namespace) {
-            $parts = explode('\\', trim($use[0], '\\'));
-        } else {
-            $parts = explode('\\', $namespace);
-            array_shift($parts);
-            array_unshift($parts, trim($use[0], '\\'));
-            array_push($parts, $name);
-        }
-
-        return [true, array_pop($parts), $parts ? implode('\\', $parts) : null];
+        return $nsParser->parseFunction($name, $namespace, $content, $line);
     }
 }

@@ -80,57 +80,9 @@ class Method
             return [false, null, null, null];
         }
 
-        return $this->parseForCaller($caller, $hitToken, $content, $line);
-    }
+        $nsParser = new Namespace_();
 
-    public function parseForCaller($caller, $hitToken, $content, $line)
-    {
-        $method = is_array($hitToken) ? $hitToken[1] : $hitToken;
-
-        $root = 0 == strncmp($caller, '\\', 1);
-        if ($caller) {
-            $caller = trim($caller, '\\');
-        }
-        if (! $caller) {
-            return [false, null, null, null];
-        }
-
-        if ($root) {
-            $parts = explode('\\', $caller);
-
-            return [true, $method, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
-        }
-
-        $nsFinder = new \PhpCTags\Finder\Namespace_();
-        $nsInfo = $nsFinder->find($content, $line);
-        $startLine = 0;
-        $namespace = null;
-        if ($nsInfo) {
-            $namespace = $nsInfo[0];
-            $startLine = $nsInfo[1];
-        }
-
-        $parts = explode('\\', $caller);
-        $alias = $parts[0];
-
-        $useFinder = new \PhpCTags\Finder\Use_();
-        $use = $useFinder->find($alias, [\PhpParser\Node\Stmt\Use_::TYPE_NORMAL], $content, $startLine, $line);
-
-        if (! $use) {
-            if (! $namespace) {
-                return [true, $method, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
-            }
-            $class = array_pop($parts);
-            array_unshift($parts, $namespace);
-
-            return [true, $method, $class, implode('\\', $parts)];
-        }
-
-        $ps = explode('\\', trim($use[0], '\\'));
-        array_shift($parts);
-        $parts = array_merge($ps, $parts);
-
-        return [true, $method, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+        return $nsParser->parseMethod($method, $caller, $content, $line);
     }
 
     public function parseCallOnObject($tokens, $idx, $hitToken, $content, $line)
@@ -256,6 +208,9 @@ class Method
             return [false, null, null, null];
         }
 
-        return $this->parseForCaller($caller, $hitToken, $content, $line);
+        $method = is_array($hitToken) ? $hitToken[1] : $hitToken;
+        $nsParser = new Namespace_();
+
+        return $nsParser->parseMethod($method, $caller, $content, $line);
     }
 }
