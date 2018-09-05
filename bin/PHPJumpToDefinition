@@ -72,8 +72,8 @@ if (! isset($autoload)) {
 
 ob_start();
 try {
-    $parser = new \PhpCTags\Parser\Position();
-    $position = $parser->parse($file, $line, $column, $keyword, $root, $autoload);
+    $finder = new \PhpCTags\Finder\Position();
+    $position = $finder->find($file, $line, $column, $keyword, $root, $autoload);
     if ($position) {
         $result = "{$position->file} {$position->line} {$position->column}";
     } else {

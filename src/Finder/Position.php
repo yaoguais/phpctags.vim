@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Finder;
 
 class Position
 {
-    public function parse($file, $line, $column, $keyword, $root, $autoload)
+    public function find($file, $line, $column, $keyword, $root, $autoload)
     {
         $typeParser = new \PhpCTags\Parser\Type_();
         $content = \PhpCTags\Pool\File::getInstance()->fromFile($file);
