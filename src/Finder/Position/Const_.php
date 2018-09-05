@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class Constant_ implements Finder
+class Const_ implements Finder
 {
     public $root;
     public $namespace;
@@ -20,10 +20,10 @@ class Constant_ implements Finder
     public function validate()
     {
         if (! $this->getRoot()) {
-            throw new \Exception('Constant Finder root is invalid');
+            throw new \Exception('Const Finder root is invalid');
         }
         if (! $this->name) {
-            throw new \Exception('Constant Finder name is invalid');
+            throw new \Exception('Const Finder name is invalid');
         }
     }
 
@@ -104,16 +104,16 @@ class Constant_ implements Finder
             return $this->root;
         }
         if (! file_exists($this->file)) {
-            throw new \Exception("Constant Finder file not found: {$this->file}");
+            throw new \Exception("Const Finder file not found: {$this->file}");
         }
         if (! $this->autoload) {
-            throw new \Exception('Constant Finder autoload is invalid');
+            throw new \Exception('Const Finder autoload is invalid');
         }
 
         $parser = new \PhpCTags\Parser\Root();
         $this->root = $parser->parse($this->file, $this->autoload);
         if (! $this->root) {
-            throw new \Exception('Constant Finder root is invalid');
+            throw new \Exception('Const Finder root is invalid');
         }
 
         return $this->root;

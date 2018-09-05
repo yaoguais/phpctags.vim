@@ -106,7 +106,7 @@ class Namespace_
         return $this->parseType($types, $name, $namespace, $content, $line);
     }
 
-    public function parseConstant($name, $namespace, $content, $line)
+    public function parseConst($name, $namespace, $content, $line)
     {
         $types = [\PhpParser\Node\Stmt\Use_::TYPE_CONSTANT];
 

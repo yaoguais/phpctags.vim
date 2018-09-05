@@ -47,6 +47,6 @@ class Const_ implements Parser
         $namespace = count($parts) > 0 ? implode('\\', $parts) : null;
         $nsParser = new \PhpCTags\Parser\Namespace_();
 
-        return $nsParser->parseConstant($name, $namespace, $content, $line);
+        return $nsParser->parseConst($name, $namespace, $content, $line);
     }
 }

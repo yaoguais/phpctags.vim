@@ -2,7 +2,7 @@
 
 namespace Tests\Finder\Position;
 
-class ConstantTest extends \Tests\BaseTest
+class ConstTest extends \Tests\BaseTest
 {
     public function testFindFromFunctionDefine()
     {
@@ -35,7 +35,7 @@ class ConstantTest extends \Tests\BaseTest
         ];
 
         foreach ($cases as $i => $case) {
-            $finder = new \PhpCTags\Finder\Position\Constant_();
+            $finder = new \PhpCTags\Finder\Position\Const_();
             $finder->root = $case['input'][0];
             $finder->name = $case['input'][1];
             $finder->namespace = $case['input'][2];

@@ -4,14 +4,6 @@ namespace PhpCTags\Parser;
 
 class Type
 {
-    const CONSTANT = 1;
-    const VARIABLE = 2;
-    const FUNCTION_ = 3;
-    const CLASS_ = 4;
-    const METHOD = 5;
-    const TRAIT_ = 6;
-    const INTERFACE_ = 7;
-
     public function parse($content, $line, $column, $keyword)
     {
         $tokens = \PhpCTags\Pool\Token::getInstance()->fromContent($content);
@@ -55,7 +47,7 @@ class Type
         $classConstParser = new \PhpCTags\Parser\Type\ClassConst();
         list($ok, $name, $class, $namespace) = $classConstParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Position\ClassConstant();
+            $finder = new \PhpCTags\Finder\Position\ClassConst();
             $finder->name = $name;
             $finder->class = $class;
             $finder->namespace = $namespace;
@@ -66,7 +58,7 @@ class Type
         $constParser = new \PhpCTags\Parser\Type\Const_();
         list($ok, $name, $namespace) = $constParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
-            $finder = new \PhpCTags\Finder\Position\Constant_();
+            $finder = new \PhpCTags\Finder\Position\Const_();
             $finder->name = $name;
             $finder->namespace = $namespace;
 

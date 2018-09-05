@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class ClassConstant extends Method implements Finder
+class ClassConst extends Method implements Finder
 {
     public function find()
     {
@@ -19,11 +19,11 @@ class ClassConstant extends Method implements Finder
 
         $file = $refClass->getFileName();
         if (! file_exists($file)) {
-            throw new \Exception("Class Constant Finder file not found: $file");
+            throw new \Exception("Class Const Finder file not found: $file");
         }
         $line = $refClass->getStartLine();
         if ($line <= 0) {
-            throw new \Exception("Class Constant Finder line is invalid: $line");
+            throw new \Exception("Class Const Finder line is invalid: $line");
         }
 
         $content = file_get_contents($file);
@@ -37,7 +37,7 @@ class ClassConstant extends Method implements Finder
         }
 
         if (! $startLine) {
-            throw new \Exception("Class Constant Finder class not found: $class");
+            throw new \Exception("Class Const Finder class not found: $class");
         }
 
         $tokens = \PhpCTags\Pool\Token::getInstance()->fromContent($content);
@@ -58,7 +58,7 @@ class ClassConstant extends Method implements Finder
         }
 
         if (0 == count($lines)) {
-            throw new \Exception("Class Constant Finder no const found: $class::{$this->name}");
+            throw new \Exception("Class Const Finder no const found: $class::{$this->name}");
         }
 
         $rows = explode("\n", $content);
@@ -72,6 +72,6 @@ class ClassConstant extends Method implements Finder
             }
         }
 
-        throw new \Exception("Class Constant Finder no avaiable const: $class::{$this->name}");
+        throw new \Exception("Class Const Finder no avaiable const: $class::{$this->name}");
     }
 }

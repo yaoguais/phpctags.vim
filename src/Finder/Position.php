@@ -33,7 +33,7 @@ class Position
             return $finder->find();
         }
 
-        if ($finder instanceof \PhpCTags\Finder\Position\ClassConstant) {
+        if ($finder instanceof \PhpCTags\Finder\Position\ClassConst) {
             $finder->file = $file;
             $finder->root = $root;
             $finder->autoload = $autoload;
@@ -41,7 +41,7 @@ class Position
             return $finder->find();
         }
 
-        if ($finder instanceof \PhpCTags\Finder\Position\Constant_) {
+        if ($finder instanceof \PhpCTags\Finder\Position\Const_) {
             $finder->file = $file;
             $finder->root = $root;
             $finder->autoload = $autoload;
