@@ -61,7 +61,7 @@ namespace Bar {
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0][0]);
             try {
-                $parser = new \PhpCTags\Parser\Method();
+                $parser = new \PhpCTags\Parser\Type\Method();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");
@@ -103,7 +103,7 @@ namespace Foo {
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0][0]);
             try {
-                $parser = new \PhpCTags\Parser\Method();
+                $parser = new \PhpCTags\Parser\Type\Method();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");
@@ -152,7 +152,7 @@ namespace Foo {
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0][0]);
             try {
-                $parser = new \PhpCTags\Parser\Method();
+                $parser = new \PhpCTags\Parser\Type\Method();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");

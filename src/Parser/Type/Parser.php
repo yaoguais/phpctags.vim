@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpCtags\Parser;
+namespace PhpCTags\Parser\Type;
 
 interface Parser
 {

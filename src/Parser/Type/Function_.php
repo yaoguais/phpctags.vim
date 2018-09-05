@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Parser\Type;
 
 class Function_ implements Parser
 {
@@ -50,7 +50,7 @@ class Function_ implements Parser
         }
 
         $name = is_array($tokens[$idx]) ? $tokens[$idx][1] : $tokens[$idx];
-        $nsParser = new Namespace_();
+        $nsParser = new \PhpCTags\Parser\Namespace_();
 
         return $nsParser->parseFunction($name, $namespace, $content, $line);
     }

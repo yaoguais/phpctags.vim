@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Parser\Type;
 
 class Method implements Parser
 {
@@ -80,7 +80,7 @@ class Method implements Parser
             return [false, null, null, null];
         }
 
-        $nsParser = new Namespace_();
+        $nsParser = new \PhpCTags\Parser\Namespace_();
 
         return $nsParser->parseMethod($method, $caller, $content, $line);
     }
@@ -209,7 +209,7 @@ class Method implements Parser
         }
 
         $method = is_array($hitToken) ? $hitToken[1] : $hitToken;
-        $nsParser = new Namespace_();
+        $nsParser = new \PhpCTags\Parser\Namespace_();
 
         return $nsParser->parseMethod($method, $caller, $content, $line);
     }

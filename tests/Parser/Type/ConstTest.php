@@ -2,9 +2,9 @@
 
 namespace Tests\Parser;
 
-class ConstantTest extends \Tests\BaseTest
+class ConstTest extends \Tests\BaseTest
 {
-    public function testParse()
+    public function testParseConst()
     {
         $cases = [
             [['<?php echo Foo;', 3, 1], [true, 'Foo', null]],
@@ -49,7 +49,7 @@ namespace Baz {
             $tokens = $tokenParser->parse($case[0][0]);
 
             try {
-                $parser = new \PhpCTags\Parser\Constant_();
+                $parser = new \PhpCTags\Parser\Type\Const_();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");

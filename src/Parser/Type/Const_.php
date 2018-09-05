@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Parser\Type;
 
-class Constant_ implements Parser
+class Const_ implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {
@@ -45,7 +45,7 @@ class Constant_ implements Parser
         $parts = explode('\\', $full);
         $name = array_pop($parts);
         $namespace = count($parts) > 0 ? implode('\\', $parts) : null;
-        $nsParser = new Namespace_();
+        $nsParser = new \PhpCTags\Parser\Namespace_();
 
         return $nsParser->parseConstant($name, $namespace, $content, $line);
     }

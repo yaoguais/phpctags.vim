@@ -2,13 +2,8 @@
 
 namespace PhpCTags\Parser;
 
-class Class_ implements Parser
+class Class_
 {
-    public function parse($tokens, $idx, $content, $line)
-    {
-        throw new \Exception('not implements');
-    }
-
     public function parseToken($tokens, $limit = -1)
     {
         $classes = [];

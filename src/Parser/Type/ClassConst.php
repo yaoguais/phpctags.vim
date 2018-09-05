@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Parser\Type;
 
-class ClassConstant extends Method implements Parser
+class ClassConst extends Method implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {

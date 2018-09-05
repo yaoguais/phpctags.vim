@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Parser;
 
-class Type_
+class Type
 {
     const CONSTANT = 1;
     const VARIABLE = 2;
@@ -21,7 +21,7 @@ class Type_
             throw new \Exception("keyword not found: $keyword");
         }
 
-        $varParser = new \PhpCTags\Parser\Variable();
+        $varParser = new \PhpCTags\Parser\Type\Variable();
         list($ok) = $varParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Position\Variable();
@@ -31,7 +31,7 @@ class Type_
             return $finder;
         }
 
-        $funcParser = new \PhpCTags\Parser\Function_();
+        $funcParser = new \PhpCTags\Parser\Type\Function_();
         list($ok, $name, $namespace) = $funcParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Position\Function_();
@@ -41,7 +41,7 @@ class Type_
             return $finder;
         }
 
-        $methodParser = new \PhpCTags\Parser\Method();
+        $methodParser = new \PhpCTags\Parser\Type\Method();
         list($ok, $name, $class, $namespace) = $methodParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Position\Method();
@@ -52,7 +52,7 @@ class Type_
             return $finder;
         }
 
-        $classConstParser = new \PhpCTags\Parser\ClassConstant();
+        $classConstParser = new \PhpCTags\Parser\Type\ClassConst();
         list($ok, $name, $class, $namespace) = $classConstParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Position\ClassConstant();
@@ -63,7 +63,7 @@ class Type_
             return $finder;
         }
 
-        $constParser = new \PhpCTags\Parser\Constant_();
+        $constParser = new \PhpCTags\Parser\Type\Const_();
         list($ok, $name, $namespace) = $constParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Position\Constant_();

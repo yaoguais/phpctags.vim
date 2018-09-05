@@ -63,7 +63,7 @@ namespace Bar {
             $tokens = $tokenParser->parse($case[0][0]);
 
             try {
-                $parser = new \PhpCTags\Parser\Function_();
+                $parser = new \PhpCTags\Parser\Type\Function_();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");

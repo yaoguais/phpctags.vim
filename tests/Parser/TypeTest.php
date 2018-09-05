@@ -31,7 +31,7 @@ foo();foo();', 2, 10, 'foo'], -1],
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0][0]);
 
-            $parser = new \PhpCTags\Parser\Type_();
+            $parser = new \PhpCTags\Parser\Type();
             $this->assertEquals(
                 $case[1],
                 $parser->index($tokens, $case[0][1], $case[0][2], $case[0][3]),

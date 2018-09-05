@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpCTags\Parser;
+namespace PhpCTags\Parser\Type;
 
 class Variable implements Parser
 {

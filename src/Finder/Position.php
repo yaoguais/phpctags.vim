@@ -6,7 +6,7 @@ class Position
 {
     public function find($file, $line, $column, $keyword, $root, $autoload)
     {
-        $typeParser = new \PhpCTags\Parser\Type_();
+        $typeParser = new \PhpCTags\Parser\Type();
         $content = \PhpCTags\Pool\File::getInstance()->fromFile($file);
 
         $finder = $typeParser->parse($content, $line, $column, $keyword);

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpCtags\Finder\Position;
+namespace PhpCTags\Finder\Position;
 
 interface Finder
 {

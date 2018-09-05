@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Parser;
+namespace Tests\Parser\Type;
 
-class ClassConstantTest extends \Tests\BaseTest
+class ClassConstTest extends \Tests\BaseTest
 {
-    public function testParseClassConstant()
+    public function testParseClassConst()
     {
         $cases = [
             [['<?php Foo::BAR;', 3, 1], [true, 'BAR', 'Foo', null]],
@@ -20,7 +20,7 @@ class ClassConstantTest extends \Tests\BaseTest
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0][0]);
             try {
-                $parser = new \PhpCTags\Parser\ClassConstant();
+                $parser = new \PhpCTags\Parser\Type\ClassConst();
                 $result = $parser->parse($tokens, $case[0][1], $case[0][0], $case[0][2]);
             } catch (\Exception $e) {
                 $this->assertEquals($case[1], $e->getMessage(), "case #$i");
