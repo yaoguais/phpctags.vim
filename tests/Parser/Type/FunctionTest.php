@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Parser;
+namespace Tests\Parser\Type;
 
 class FunctionTest extends \Tests\BaseTest
 {
