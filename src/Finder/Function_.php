@@ -110,8 +110,8 @@ class Function_
         }
 
         $content = file_get_contents($file);
-        $namespaceParser = new \PhpCTags\Parser\Namespace_();
-        $namespaces = $namespaceParser->parse(token_get_all($content));
+        $nsParser = new \PhpCTags\Parser\Namespace_();
+        $namespaces = $nsParser->parseToken(token_get_all($content));
 
         if ($this->namespace) {
             $found = false;

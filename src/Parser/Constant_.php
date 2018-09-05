@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Parser;
 
-class Constant_
+class Constant_ implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {

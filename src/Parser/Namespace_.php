@@ -2,9 +2,14 @@
 
 namespace PhpCTags\Parser;
 
-class Namespace_
+class Namespace_ implements Parser
 {
-    public function parse($tokens, $limit = -1)
+    public function parse($tokens, $idx, $content, $line)
+    {
+        throw new \Exception('not implements');
+    }
+
+    public function parseToken($tokens, $limit = -1)
     {
         $namespaces = [];
         $namespace = null;

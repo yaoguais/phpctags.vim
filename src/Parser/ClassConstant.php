@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Parser;
 
-class ClassConstant extends Method
+class ClassConstant extends Method implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {

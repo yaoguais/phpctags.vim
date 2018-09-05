@@ -22,7 +22,7 @@ class Type_
         }
 
         $varParser = new \PhpCTags\Parser\Variable();
-        list($ok) = $varParser->parse($tokens, $idx);
+        list($ok) = $varParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
             $finder = new \PhpCTags\Finder\Variable();
             $finder->tokens = $tokens;

@@ -2,9 +2,9 @@
 
 namespace PhpCTags\Parser;
 
-class Variable
+class Variable implements Parser
 {
-    public function parse($tokens, $idx)
+    public function parse($tokens, $idx, $content, $line)
     {
         $token = $tokens[$idx];
         $name = is_array($token) ? $token[0] : null;

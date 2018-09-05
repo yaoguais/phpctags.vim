@@ -39,7 +39,7 @@ namespace Bar {
             $parser = new \PhpCTags\Parser\Class_();
             $tokenParser = new \PhpCTags\Parser\Token();
             $tokens = $tokenParser->parse($case[0]);
-            $this->assertEquals($case[1], $parser->parse($tokens), "case #$i");
+            $this->assertEquals($case[1], $parser->parseToken($tokens), "case #$i");
         }
     }
 }

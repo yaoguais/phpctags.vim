@@ -19,7 +19,7 @@ class Class_
         if (! array_key_exists($key, $this->caches)) {
             $parser = new \PhpCTags\Parser\Class_();
             $tokens = Token::getInstance()->fromContent($content);
-            $this->caches[$key] = $parser->parse($tokens);
+            $this->caches[$key] = $parser->parseToken($tokens);
         }
 
         return $this->caches[$key];

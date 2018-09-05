@@ -2,9 +2,14 @@
 
 namespace PhpCTags\Parser;
 
-class Class_
+class Class_ implements Parser
 {
-    public function parse($tokens, $limit = -1)
+    public function parse($tokens, $idx, $content, $line)
+    {
+        throw new \Exception('not implements');
+    }
+
+    public function parseToken($tokens, $limit = -1)
     {
         $classes = [];
         $class = null;
@@ -49,7 +54,7 @@ class Class_
     public function parseNamespace($tokens, $classes)
     {
         $nsParser = new \PhpCTags\Parser\Namespace_();
-        $namespaces = $nsParser->parse($tokens);
+        $namespaces = $nsParser->parseToken($tokens);
 
         $results = [];
         foreach ($classes as $class) {

@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Parser;
 
-class Method
+class Method implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {
