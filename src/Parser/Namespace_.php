@@ -101,14 +101,14 @@ class Namespace_
 
     public function parseFunction($name, $namespace, $content, $line)
     {
-        $types = [\PhpParser\Node\Stmt\Use_::TYPE_NORMAL, \PhpParser\Node\Stmt\Use_::TYPE_FUNCTION];
+        $types = [Use_::TYPE_NORMAL, Use_::TYPE_FUNCTION];
 
         return $this->parseType($types, $name, $namespace, $content, $line);
     }
 
     public function parseConst($name, $namespace, $content, $line)
     {
-        $types = [\PhpParser\Node\Stmt\Use_::TYPE_CONSTANT];
+        $types = [Use_::TYPE_CONSTANT];
 
         return $this->parseType($types, $name, $namespace, $content, $line);
     }
@@ -142,7 +142,7 @@ class Namespace_
         $alias = $parts[0];
 
         $useFinder = new \PhpCTags\Finder\Use_();
-        $use = $useFinder->find($alias, [\PhpParser\Node\Stmt\Use_::TYPE_NORMAL], $content, $startLine, $line);
+        $use = $useFinder->find($alias, [Use_::TYPE_NORMAL], $content, $startLine, $line);
 
         if (! $use) {
             if (! $namespace) {

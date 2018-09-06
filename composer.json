@@ -9,7 +9,6 @@
     ],
     "type": "library",
     "require": {
-        "nikic/php-parser": "^2.0|^3.0|^4.0"
     },
     "autoload": {
         "psr-4": {

@@ -53,7 +53,7 @@ Install the\_silver\_searcher for quick searching:
 Finally add the bin dir into the system $PATH variable:
 
     $ git clone https://github.com/yaoguais/phpctags.vim.git
-    $ cd phpctags.vim && composer install
+    $ cd phpctags.vim && composer install --no-dev
     $ export PATH=$(pwd)/bin:$PATH
 
 
