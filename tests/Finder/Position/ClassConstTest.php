@@ -13,7 +13,7 @@ class ClassConstTest extends \Tests\BaseTest
 
         $cases = [
             [
-                'input' => [$root, $file, 'BAZ', 'Bar', 'Foo'],
+                'input' => ['BAZ', 'Bar', 'Foo'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     7,
@@ -24,11 +24,9 @@ class ClassConstTest extends \Tests\BaseTest
 
         foreach ($cases as $i => $case) {
             $finder = new \PhpCTags\Finder\Position\ClassConst();
-            $finder->file = $case['input'][1];
-            $finder->name = $case['input'][2];
-            $finder->class = $case['input'][3];
-            $finder->namespace = $case['input'][4];
-            $finder->autoload = 'vendor/autoload.php';
+            $finder->name = $case['input'][0];
+            $finder->class = $case['input'][1];
+            $finder->namespace = $case['input'][2];
 
             try {
                 $position = $finder->find();

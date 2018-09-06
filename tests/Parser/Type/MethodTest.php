@@ -17,15 +17,15 @@ class MethodTest extends \Tests\BaseTest
         ];
 
         $code = '<?php
-namespace Qux {
-    use Bar;
-    use Bar\\Foo;
-    use Bar\\Foo as BarFoo;
+namespace Quux {
+    use Corge;
+    use Corge\\Foo;
+    use Corge\\Foo as CorgeFoo;
     class Baz extends Foo {
         public static function foo() {
-            Bar\\Foo::bar();
+            Corge\\Foo::bar();
             Foo::bar();
-            BarFoo::bar();
+            CorgeFoo::bar();
         }
         public static function bar() {
             self::foo();
@@ -36,25 +36,28 @@ namespace Qux {
     Baz::foo();
     Baz::bar();
 }
-namespace Bar {
+namespace Corge {
     class Foo {
         public static function foo() {
-            echo "Bar\\Foo::foo()\n";
+            // echo "Corge\\Foo::foo()\n";
         }
         public static function bar() {
-            echo "Bar\\Foo::bar()\n";
+            // echo "Corge\\Foo::bar()\n";
         }
     }
 }';
+
+        eval(substr($code, strlen('<?php')));
+
         $cases = array_merge($cases, [
-            [[$code, 63, 8], [true, 'bar', 'Foo', 'Bar']],
-            [[$code, 71, 9], [true, 'bar', 'Foo', 'Bar']],
-            [[$code, 79, 10], [true, 'bar', 'Foo', 'Bar']],
-            [[$code, 103, 13], [true, 'foo', 'Baz', 'Qux']],
-            [[$code, 111, 14], [true, 'foo', 'Baz', 'Qux']],
-            [[$code, 119, 15], [true, 'foo', 'Baz', 'Qux']],
-            [[$code, 133, 18], [true, 'foo', 'Baz', 'Qux']],
-            [[$code, 141, 19], [true, 'bar', 'Baz', 'Qux']],
+            [[$code, 63, 8], [true, 'bar', 'Foo', 'Corge']],
+            [[$code, 71, 9], [true, 'bar', 'Foo', 'Corge']],
+            [[$code, 79, 10], [true, 'bar', 'Foo', 'Corge']],
+            [[$code, 103, 13], [true, 'foo', 'Baz', 'Quux']],
+            [[$code, 111, 14], [true, 'foo', 'Baz', 'Quux']],
+            [[$code, 119, 15], [true, 'foo', 'Foo', 'Corge']],
+            [[$code, 133, 18], [true, 'foo', 'Baz', 'Quux']],
+            [[$code, 141, 19], [true, 'bar', 'Baz', 'Quux']],
         ]);
 
         foreach ($cases as $i => $case) {

@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Parser\Type;
 
-class Method implements Parser
+class Method extends Class_ implements Parser
 {
     public function parse($tokens, $idx, $content, $line)
     {
@@ -73,6 +73,13 @@ class Method implements Parser
             $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
             for ($j = count($classes) - 1; $j >= 0; --$j) {
                 if ($classes[$j][2] <= $line) {
+                    if ('parent' == $caller) {
+                        list($class, $namespace) =
+                            $this->parseParent($classes[$j][0], $classes[$j][1]);
+
+                        return [true, $method, $class, $namespace];
+                    }
+
                     return [true, $method, $classes[$j][0], $classes[$j][1]];
                 }
             }

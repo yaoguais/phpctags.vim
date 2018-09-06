@@ -7,8 +7,6 @@ class Const_ implements Finder
     public $root;
     public $namespace;
     public $name;
-    public $file;
-    public $autoload;
 
     protected $logger;
 
@@ -19,9 +17,6 @@ class Const_ implements Finder
 
     public function validate()
     {
-        if (! $this->getRoot()) {
-            throw new \Exception('Const Finder root is invalid');
-        }
         if (! $this->name) {
             throw new \Exception('Const Finder name is invalid');
         }
@@ -96,26 +91,5 @@ class Const_ implements Finder
         }
 
         return array_merge($nsPs, $ps);
-    }
-
-    public function getRoot()
-    {
-        if ($this->root) {
-            return $this->root;
-        }
-        if (! file_exists($this->file)) {
-            throw new \Exception("Const Finder file not found: {$this->file}");
-        }
-        if (! $this->autoload) {
-            throw new \Exception('Const Finder autoload is invalid');
-        }
-
-        $parser = new \PhpCTags\Parser\Root();
-        $this->root = $parser->parse($this->file, $this->autoload);
-        if (! $this->root) {
-            throw new \Exception('Const Finder root is invalid');
-        }
-
-        return $this->root;
     }
 }

@@ -8,8 +8,6 @@ class ClassConst extends Method implements Finder
     {
         $this->validate();
 
-        require_once $this->getAutoloadFile();
-
         $class = $this->namespace ? $this->namespace.'\\'.$this->class : $this->class;
         try {
             $refClass = new \ReflectionClass($class);

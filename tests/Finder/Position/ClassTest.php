@@ -13,7 +13,7 @@ class ClassTest extends \Tests\BaseTest
 
         $cases = [
             [
-                'input' => [$root, $file, 'Foo', 'Baz'],
+                'input' => ['Foo', 'Baz'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     5,
@@ -21,7 +21,7 @@ class ClassTest extends \Tests\BaseTest
                 ),
             ],
             [
-                'input' => [$root, $file, 'Bar', 'Baz'],
+                'input' => ['Bar', 'Baz'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     20,
@@ -29,7 +29,7 @@ class ClassTest extends \Tests\BaseTest
                 ),
             ],
             [
-                'input' => [$root, $file, 'Baz', 'Baz'],
+                'input' => ['Baz', 'Baz'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     10,
@@ -37,7 +37,7 @@ class ClassTest extends \Tests\BaseTest
                 ),
             ],
             [
-                'input' => [$root, $file, 'Qux', 'Baz'],
+                'input' => ['Qux', 'Baz'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     15,
@@ -48,10 +48,8 @@ class ClassTest extends \Tests\BaseTest
 
         foreach ($cases as $i => $case) {
             $finder = new \PhpCTags\Finder\Position\Class_();
-            $finder->file = $case['input'][1];
-            $finder->name = $case['input'][2];
-            $finder->namespace = $case['input'][3];
-            $finder->autoload = 'vendor/autoload.php';
+            $finder->name = $case['input'][0];
+            $finder->namespace = $case['input'][1];
 
             try {
                 $position = $finder->find();

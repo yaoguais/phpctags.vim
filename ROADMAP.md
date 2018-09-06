@@ -39,7 +39,7 @@
 - [x] method call by class::method()
 - [x] method call by self::method()
 - [x] method call by static::method()
-- [ ] method call by parent::method()
+- [x] method call by parent::method()
 - [x] method call by $this->method()
 - [x] method call by (new Class())->method()
 - [ ] method call by anonymous class

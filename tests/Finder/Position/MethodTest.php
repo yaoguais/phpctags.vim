@@ -13,7 +13,7 @@ class MethodTest extends \Tests\BaseTest
 
         $cases = [
             [
-                'input' => [$root, $file, 'foo', 'Baz', 'Bar'],
+                'input' => ['foo', 'Baz', 'Bar'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     7,
@@ -21,7 +21,7 @@ class MethodTest extends \Tests\BaseTest
                 ),
             ],
             [
-                'input' => [$root, $file, 'qux', 'Baz', 'Bar'],
+                'input' => ['qux', 'Baz', 'Bar'],
                 'output' => new \PhpCTags\Position(
                     $file,
                     11,
@@ -32,11 +32,9 @@ class MethodTest extends \Tests\BaseTest
 
         foreach ($cases as $i => $case) {
             $finder = new \PhpCTags\Finder\Position\Method();
-            $finder->file = $case['input'][1];
-            $finder->name = $case['input'][2];
-            $finder->class = $case['input'][3];
-            $finder->namespace = $case['input'][4];
-            $finder->autoload = 'vendor/autoload.php';
+            $finder->name = $case['input'][0];
+            $finder->class = $case['input'][1];
+            $finder->namespace = $case['input'][2];
 
             try {
                 $position = $finder->find();

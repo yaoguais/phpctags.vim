@@ -81,20 +81,23 @@ namespace Qux {
 namespace Bar {
     class Foo {
         public static function foo() {
-            echo "Bar\\Foo::foo()\n";
+            // echo "Bar\\Foo::foo()\n";
         }
         public static function bar() {
-            echo "Bar\\Foo::bar()\n";
+            // echo "Bar\\Foo::bar()\n";
         }
     }
 }';
+
+        eval(substr($code, strlen('<?php')));
+
         $cases = array_merge($cases, [
             [[$code, 61, 8], [true, 'Foo', 'Bar']],
             [[$code, 69, 9], [true, 'Foo', 'Bar']],
             [[$code, 77, 10], [true, 'Foo', 'Bar']],
             [[$code, 101, 13], [true, 'Baz', 'Qux']],
             [[$code, 109, 14], [true, 'Baz', 'Qux']],
-            [[$code, 117, 15], [true, 'Baz', 'Qux']],
+            [[$code, 117, 15], [true, 'Foo', 'Bar']],
             [[$code, 131, 18], [true, 'Baz', 'Qux']],
             [[$code, 139, 19], [true, 'Baz', 'Qux']],
         ]);

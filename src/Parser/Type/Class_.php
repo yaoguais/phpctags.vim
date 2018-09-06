@@ -108,9 +108,19 @@ class Class_ implements Parser
             }
         }
 
-        if ('self' == $name || 'static' == $name || 'parent' == $name) {
+        if ('self' == $name || 'static' == $name) {
             if ($class) {
                 return [true, $class[0], $class[1]];
+            }
+
+            return [false, null, null];
+        }
+
+        if ('parent' == $name) {
+            if ($class) {
+                list($name, $namespace) = $this->parseParent($class[0], $class[1]);
+
+                return [true, $name, $namespace];
             }
 
             return [false, null, null];
@@ -119,5 +129,21 @@ class Class_ implements Parser
         $nsParser = new \PhpCTags\Parser\Namespace_();
 
         return $nsParser->parseClass($name, $content, $class ? $class[2] : $line);
+    }
+
+    public function parseParent($name, $namespace)
+    {
+        $class = $namespace ? $namespace.'\\'.$name : $name;
+        $refClass = new \ReflectionClass($class);
+
+        $refParent = $refClass->getParentClass();
+        if (! $refParent) {
+            throw new \Exception("Class has no parent class: $class");
+        }
+
+        $name = $refParent->getShortName();
+        $namespace = $refParent->getNamespaceName();
+
+        return [$name, $namespace ? $namespace : null];
     }
 }

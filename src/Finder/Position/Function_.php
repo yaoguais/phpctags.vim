@@ -7,8 +7,6 @@ class Function_ implements Finder
     public $root;
     public $namespace;
     public $name;
-    public $file;
-    public $autoload;
 
     protected $logger;
 
@@ -21,9 +19,6 @@ class Function_ implements Finder
 
     public function validate()
     {
-        if (! $this->getRoot()) {
-            throw new \Exception('Function Finder root is invalid');
-        }
         if (! $this->name) {
             throw new \Exception('Function Finder name is invalid');
         }
@@ -80,27 +75,6 @@ class Function_ implements Finder
         $this->logger->debug('positions found: '.json_encode($positions));
 
         return $positions[0];
-    }
-
-    public function getRoot()
-    {
-        if ($this->root) {
-            return $this->root;
-        }
-        if (! file_exists($this->file)) {
-            throw new \Exception("Function Finder file not found: {$this->file}");
-        }
-        if (! $this->autoload) {
-            throw new \Exception('Function Finder autoload is invalid');
-        }
-
-        $parser = new \PhpCTags\Parser\Root();
-        $this->root = $parser->parse($this->file, $this->autoload);
-        if (! $this->root) {
-            throw new \Exception('Function Finder root is invalid');
-        }
-
-        return $this->root;
     }
 
     public function parse($file, $line, $raw)

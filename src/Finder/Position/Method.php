@@ -19,8 +19,6 @@ class Method extends Class_ implements Finder
     {
         $this->validate();
 
-        require_once $this->getAutoloadFile();
-
         try {
             $class = $this->namespace ? $this->namespace.'\\'.$this->class : $this->class;
             $refMethod = new \ReflectionMethod($class, $this->name);
