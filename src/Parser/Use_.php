@@ -88,7 +88,7 @@ class Use_
                 $uses[$alias][] = [$name, $t, $line];
             } elseif (3 == $cn) {
                 if ('as' !== $cs[1]) {
-                    throw new \Exception("invalid use statement: $u");
+                    continue;
                 }
                 $name = $prefix ? $prefix.$cs[0] : $cs[0];
                 $alias = strtolower($cs[2]);
@@ -96,7 +96,7 @@ class Use_
                 $uses[$alias][] = [$name, $t, $line];
             } elseif (4 == $cn) {
                 if ('as' !== $cs[2]) {
-                    throw new \Exception("invalid use statement: $u");
+                    continue;
                 }
                 $name = $prefix ? $prefix.$cs[1] : $cs[1];
                 $alias = strtolower($cs[3]);

@@ -41,6 +41,14 @@ class Position
             return $finder->find();
         }
 
+        if ($finder instanceof \PhpCTags\Finder\Position\Class_) {
+            $finder->file = $file;
+            $finder->root = $root;
+            $finder->autoload = $autoload;
+
+            return $finder->find();
+        }
+
         if ($finder instanceof \PhpCTags\Finder\Position\Const_) {
             $finder->file = $file;
             $finder->root = $root;

@@ -26,9 +26,9 @@
 
 ## class
 
-- [ ] class
-- [ ] trait
-- [ ] interface
+- [x] class
+- [x] trait
+- [x] interface
 
 ## method
 

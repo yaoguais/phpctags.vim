@@ -113,20 +113,20 @@ class Namespace_
         return $this->parseType($types, $name, $namespace, $content, $line);
     }
 
-    public function parseMethod($name, $class, $content, $line)
+    public function parseClass($class, $content, $line)
     {
         $root = 0 == strncmp($class, '\\', 1);
         if ($class) {
             $class = trim($class, '\\');
         }
         if (! $class) {
-            return [false, null, null, null];
+            return [false, null, null];
         }
 
         if ($root) {
             $parts = explode('\\', $class);
 
-            return [true, $name, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+            return [true, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
         }
 
         $nsFinder = new \PhpCTags\Finder\Namespace_();
@@ -146,18 +146,28 @@ class Namespace_
 
         if (! $use) {
             if (! $namespace) {
-                return [true, $name, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+                return [true, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
             }
             $class = array_pop($parts);
             array_unshift($parts, $namespace);
 
-            return [true, $name, $class, implode('\\', $parts)];
+            return [true, $class, implode('\\', $parts)];
         }
 
         $ps = explode('\\', trim($use[0], '\\'));
         array_shift($parts);
         $parts = array_merge($ps, $parts);
 
-        return [true, $name, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+        return [true, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+    }
+
+    public function parseMethod($name, $class, $content, $line)
+    {
+        list($ok, $class, $namespace) = $this->parseClass($class, $content, $line);
+        if ($ok) {
+            return [$ok, $name, $class, $namespace];
+        }
+
+        return [$ok, null, null, null];
     }
 }
