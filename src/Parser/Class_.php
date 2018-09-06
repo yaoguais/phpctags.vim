@@ -29,7 +29,7 @@ class Class_
                 continue;
             }
             if ('' === trim($data) || '{' === $data) {
-                if ($class && $classLine > 0) {
+                if (preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $class)) {
                     $classes[] = [$class, $classLine];
                     if ($limit > 0 && count($class) >= $limit) {
                         break;
