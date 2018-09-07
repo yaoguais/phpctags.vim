@@ -69,6 +69,22 @@ class Token
                 ++$line;
             }
 
+            if (in_array(T_CLASS, $types) && T_CLASS == $name) {
+                // skip ClassName::class
+                for ($j = $i - 1; $j >= 0; --$j) {
+                    $t = $tokens[$j];
+                    $n = is_array($t) ? $t[0] : null;
+                    $d = is_array($t) ? $t[1] : $t;
+                    if ('' === trim($d)) {
+                        continue;
+                    }
+                    if (T_PAAMAYIM_NEKUDOTAYIM == $n) {
+                        continue 2;
+                    }
+                    break;
+                }
+            }
+
             if (in_array($name, $types)) {
                 array_push($stack, [0, $name, $i, $line]);
             } elseif ('{' === $data) {

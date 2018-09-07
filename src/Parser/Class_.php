@@ -21,6 +21,20 @@ class Class_
             }
 
             if (T_CLASS === $name || T_TRAIT == $name || T_INTERFACE == $name) {
+                // skip ClassName::class
+                for ($j = $i - 1; $j >= 0; --$j) {
+                    $t = $tokens[$j];
+                    $n = is_array($t) ? $t[0] : null;
+                    $d = is_array($t) ? $t[1] : $t;
+                    if ('' === trim($d)) {
+                        continue;
+                    }
+                    if (T_PAAMAYIM_NEKUDOTAYIM == $n) {
+                        continue 2;
+                    }
+                    break;
+                }
+
                 $class = '';
                 $type = $name;
                 $classLine = $line;
