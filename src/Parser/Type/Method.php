@@ -72,7 +72,7 @@ class Method extends Class_ implements Parser
         if ('self' == $caller || 'static' == $caller || 'parent' == $caller) {
             $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
             for ($j = count($classes) - 1; $j >= 0; --$j) {
-                if ($classes[$j][2] <= $line) {
+                if ($classes[$j][3] <= $line) {
                     if ('parent' == $caller) {
                         list($class, $namespace) =
                             $this->parseParent($classes[$j][0], $classes[$j][1]);
@@ -109,7 +109,7 @@ class Method extends Class_ implements Parser
                 if ('$this' === $data) {
                     $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
                     for ($j = count($classes) - 1; $j >= 0; --$j) {
-                        if ($classes[$j][2] <= $line) {
+                        if ($classes[$j][3] <= $line) {
                             return [true, $method, $classes[$j][0], $classes[$j][1]];
                         }
                     }

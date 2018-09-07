@@ -7,12 +7,12 @@ class ClassTest extends \Tests\BaseTest
     public function testParseClass()
     {
         $cases = [
-            ['<?php class Foo{}', [['Foo', null, 1]]],
-            ['<?php class Foo {}', [['Foo', null, 1]]],
-            ['<?php namespace Foo { class Bar {} }', [['Bar', 'Foo', 1]]],
-            ['<?php namespace Foo; class Bar {}', [['Bar', 'Foo', 1]]],
+            ['<?php class Foo{}', [['Foo', null, T_CLASS, 1]]],
+            ['<?php class Foo {}', [['Foo', null, T_CLASS, 1]]],
+            ['<?php namespace Foo { class Bar {} }', [['Bar', 'Foo', T_CLASS, 1]]],
+            ['<?php namespace Foo; class Bar {}', [['Bar', 'Foo', T_CLASS, 1]]],
             ['<?php namespace Foo; class Bar {}
-                                   class Baz {}', [['Bar', 'Foo', 1], ['Baz', 'Foo', 2]]],
+                                   class Baz {}', [['Bar', 'Foo', T_CLASS, 1], ['Baz', 'Foo', T_CLASS, 2]]],
             ['<?php 
 namespace Foo {
     class Bar{
@@ -27,10 +27,10 @@ namespace Bar {
     {
     }
 }          ', [
-                ['Bar', 'Foo', 3],
-                ['Baz', 'Foo', 5],
-                ['Foo', 'Bar', 9],
-                ['Baz', 'Bar', 11],
+                ['Bar', 'Foo', T_CLASS, 3],
+                ['Baz', 'Foo', T_CLASS, 5],
+                ['Foo', 'Bar', T_CLASS, 9],
+                ['Baz', 'Bar', T_CLASS, 11],
               ],
             ],
         ];

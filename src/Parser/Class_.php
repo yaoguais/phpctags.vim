@@ -9,6 +9,7 @@ class Class_
         $classes = [];
         $class = null;
         $line = 1;
+        $type = null;
         $classLine = -1;
         for ($i = 0, $l = count($tokens); $i < $l; ++$i) {
             $token = $tokens[$i];
@@ -19,8 +20,9 @@ class Class_
                 ++$line;
             }
 
-            if (T_CLASS === $name) {
+            if (T_CLASS === $name || T_TRAIT == $name || T_INTERFACE == $name) {
                 $class = '';
+                $type = $name;
                 $classLine = $line;
                 continue;
             }
@@ -30,12 +32,13 @@ class Class_
             }
             if ('' === trim($data) || '{' === $data) {
                 if (preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $class)) {
-                    $classes[] = [$class, $classLine];
+                    $classes[] = [$class, $type, $classLine];
                     if ($limit > 0 && count($class) >= $limit) {
                         break;
                     }
                 }
                 $class = null;
+                $type = null;
                 $classLine = -1;
             }
             if (null !== $class) {
@@ -55,12 +58,12 @@ class Class_
         foreach ($classes as $class) {
             $namespace = null;
             for ($i = count($namespaces) - 1; $i >= 0; --$i) {
-                if ($namespaces[$i][1] <= $class[1]) {
+                if ($namespaces[$i][1] <= $class[2]) {
                     $namespace = $namespaces[$i][0];
                     break;
                 }
             }
-            $results[] = [$class[0], $namespace, $class[1]];
+            $results[] = [$class[0], $namespace, $class[1], $class[2]];
         }
 
         return $results;

@@ -15,6 +15,17 @@ class ClassConst extends Method implements Finder
             throw new \Exception('Reflection Class: '.$e->getMessage());
         }
 
+        $refConst = $refClass->getReflectionConstant($this->name);
+        if (! $refConst) {
+            throw new \Exception("Class Const Finder const not defined: {$this->name}");
+        }
+
+        $refClass = $refConst->getDeclaringClass();
+
+        $namespace = $refClass->getNamespaceName();
+        $namespace = $namespace ? $namespace : null;
+        $class = $refClass->getShortName();
+
         $file = $refClass->getFileName();
         if (! file_exists($file)) {
             throw new \Exception("Class Const Finder file not found: $file");
@@ -28,8 +39,8 @@ class ClassConst extends Method implements Finder
         $startLine = null;
         $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
         foreach ($classes as $v) {
-            if ($v[0] == $this->class && $v[1] == $this->namespace) {
-                $startLine = $v[2];
+            if ($v[0] == $class && $v[1] == $namespace) {
+                $startLine = $v[3];
                 break;
             }
         }

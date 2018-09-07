@@ -102,7 +102,7 @@ class Class_ implements Parser
         $class = null;
         $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
         for ($j = count($classes) - 1; $j >= 0; --$j) {
-            if ($classes[$j][2] <= $line) {
+            if ($classes[$j][3] <= $line) {
                 $class = $classes[$j];
                 break;
             }
@@ -128,7 +128,7 @@ class Class_ implements Parser
 
         $nsParser = new \PhpCTags\Parser\Namespace_();
 
-        return $nsParser->parseClass($name, $content, $class ? $class[2] : $line);
+        return $nsParser->parseClass($name, $content, $class ? $class[3] : $line);
     }
 
     public function parseParent($name, $namespace)

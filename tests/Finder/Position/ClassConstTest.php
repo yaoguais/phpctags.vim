@@ -20,6 +20,30 @@ class ClassConstTest extends \Tests\BaseTest
                     11
                 ),
             ],
+            [
+                'input' => ['BAZ', 'Baz', 'Foo'],
+                'output' => new \PhpCTags\Position(
+                    $file,
+                    7,
+                    11
+                ),
+            ],
+            [
+                'input' => ['FOO', 'Baz', 'Foo'],
+                'output' => new \PhpCTags\Position(
+                    $file,
+                    22,
+                    11
+                ),
+            ],
+            [
+                'input' => ['BAR', 'Baz', 'Foo'],
+                'output' => new \PhpCTags\Position(
+                    $file,
+                    27,
+                    11
+                ),
+            ],
         ];
 
         foreach ($cases as $i => $case) {
