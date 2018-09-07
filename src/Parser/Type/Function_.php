@@ -32,7 +32,11 @@ class Function_ implements Parser
             $data = is_array($token) ? $token[1] : $token;
 
             if ('' === trim($data)) {
-                continue;
+                if (null === $namespace) {
+                    continue;
+                } else {
+                    break;
+                }
             }
 
             if (T_OBJECT_OPERATOR == $name || T_NEW == $name || T_PAAMAYIM_NEKUDOTAYIM == $name) {

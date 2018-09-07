@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class Variable implements Finder
+class Variable extends BaseFinder implements Finder
 {
     public $file;
     public $tokens;
@@ -11,17 +11,17 @@ class Variable implements Finder
     public function validate()
     {
         if (! $this->file) {
-            throw new \Exception('Variable Finder file is invalid');
+            $this->throwException('file is invalid');
         }
         if (! $this->tokens) {
-            throw new \Exception('Variable Finder tokens is invalid');
+            $this->throwException('tokens is invalid');
         }
         if (! array_key_exists($this->index, $this->tokens)) {
-            throw new \Exception('Variable Finder index is invalid');
+            $this->throwException('index is invalid');
         }
         $token = $this->tokens[$this->index];
         if (! is_array($token) || T_VARIABLE != $token[0]) {
-            throw new \Exception('Variable Finder token is not a variable type');
+            $this->throwException('token is not a variable type');
         }
     }
 
@@ -43,7 +43,7 @@ class Variable implements Finder
         } while (true);
 
         if (0 == count($positions)) {
-            throw new \Exception('no target variable not found');
+            $this->throwException('no target variable not found');
         }
 
         return $positions[0];

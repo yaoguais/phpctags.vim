@@ -45,11 +45,11 @@ class FunctionTest extends \Tests\BaseTest
             ],
             [
                 'input' => [$root, 'baz', null],
-                'output' => 'no available symbol not found',
+                'output' => 'Function Finder no available symbol not found',
             ],
             [
                 'input' => [$root, 'strpos', null],
-                'output' => 'keyword is an internal function: strpos',
+                'output' => 'Function Finder keyword is an internal function: strpos',
             ],
         ];
 

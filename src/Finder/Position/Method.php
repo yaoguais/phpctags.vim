@@ -11,7 +11,7 @@ class Method extends Class_ implements Finder
         parent::validate();
 
         if (! $this->class) {
-            throw new \Exception('Method Finder class is invalid');
+            $this->throwException('class is invalid');
         }
     }
 
@@ -23,16 +23,16 @@ class Method extends Class_ implements Finder
             $class = $this->namespace ? $this->namespace.'\\'.$this->class : $this->class;
             $refMethod = new \ReflectionMethod($class, $this->name);
         } catch (\Exception $e) {
-            throw new \Exception('Reflection Method: '.$e->getMessage());
+            $this->throwException('Reflection Method: '.$e->getMessage());
         }
 
         $file = $refMethod->getFileName();
         if (! file_exists($file)) {
-            throw new \Exception("Method Finder file not found: $file");
+            $this->throwException("file not found: $file");
         }
         $line = $refMethod->getStartLine();
         if ($line <= 0) {
-            throw new \Exception("Method Finder line is invalid: $line");
+            $this->throwException("line is invalid: $line");
         }
 
         $rows = file($file);

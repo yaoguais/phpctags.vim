@@ -11,7 +11,7 @@ class VariableTest extends \Tests\BaseTest
             [
                 // $foo = null
                 [$root.'/variable/main.php', 4],
-                'no target variable not found',
+                'Variable Finder no target variable not found',
             ],
             [
                 // $bar = $foo;

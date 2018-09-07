@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class Function_ implements Finder
+class Function_ extends BaseFinder implements Finder
 {
     public $root;
     public $namespace;
@@ -20,7 +20,7 @@ class Function_ implements Finder
     public function validate()
     {
         if (! $this->name) {
-            throw new \Exception('Function Finder name is invalid');
+            $this->throwException('name is invalid');
         }
     }
 
@@ -34,7 +34,7 @@ class Function_ implements Finder
         } catch (\Exception $e) {
         }
         if (isset($refFunc) && $refFunc->isInternal()) {
-            throw new \Exception("keyword is an internal function: $fullName");
+            $this->throwException("keyword is an internal function: $fullName");
         }
 
         $command = sprintf(
@@ -45,10 +45,10 @@ class Function_ implements Finder
         $output = exec($command, $outputs, $code);
 
         if (0 !== $code && 1 !== $code) {
-            throw new \Exception("execute ag search failed:[$code] $output");
+            $this->throwException("execute ag search failed:[$code] $output");
         }
         if (0 == count($outputs)) {
-            throw new \Exception('symbol not found');
+            $this->throwException('symbol not found');
         }
 
         // global function always start with "function" and without space or table.
@@ -69,7 +69,7 @@ class Function_ implements Finder
         }
 
         if (0 == count($positions)) {
-            throw new \Exception('no available symbol not found');
+            $this->throwException('no available symbol not found');
         }
 
         $this->logger->debug('positions found: '.json_encode($positions));
@@ -80,7 +80,7 @@ class Function_ implements Finder
     public function parse($file, $line, $raw)
     {
         if (! is_readable($file)) {
-            throw new \Exception("file is not readable: $file");
+            $this->throwException("file is not readable: $file");
         }
 
         $content = file_get_contents($file);
@@ -94,25 +94,25 @@ class Function_ implements Finder
                     $found = true;
 
                     if ($line < $namespaces[$i][1]) {
-                        throw new \Exception("function found at wrong line: $file");
+                        $this->throwException("function found at wrong line: $file");
                     }
                     if ($i < $l - 1 && $line >= $namespaces[$i + 1][1]) {
                         $namespace = $namespaces[$i + 1][0];
-                        throw new \Exception("function found in wrong namespace {$namespace}: $file");
+                        $this->throwException("function found in wrong namespace {$namespace}: $file");
                     }
                 }
             }
             if (! $found) {
-                throw new \Exception("namespace {$this->namespace} not found: $file");
+                $this->throwException("namespace {$this->namespace} not found: $file");
             }
         } elseif (count($namespaces) > 0) {
-            throw new \Exception("namespace should't be exists: $file");
+            $this->throwException("namespace should't be exists: $file");
         }
 
         // class definition should't be exists.
 
         if (preg_match(self::CLASS_PATTERN, $content)) {
-            throw new \Exception("class should't be found: $file");
+            $this->throwException("class should't be found: $file");
         }
 
         return new \PhpCTags\Position($file, $line, stripos($raw, $this->name) + 1);

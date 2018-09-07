@@ -12,12 +12,12 @@ class ClassConst extends Method implements Finder
         try {
             $refClass = new \ReflectionClass($class);
         } catch (\Exception $e) {
-            throw new \Exception('Reflection Class: '.$e->getMessage());
+            $this->throwException('Reflection Class: '.$e->getMessage());
         }
 
         $refConst = $refClass->getReflectionConstant($this->name);
         if (! $refConst) {
-            throw new \Exception("Class Const Finder const not defined: {$this->name}");
+            $this->throwException("const not defined: {$this->name}");
         }
 
         $refClass = $refConst->getDeclaringClass();
@@ -28,11 +28,11 @@ class ClassConst extends Method implements Finder
 
         $file = $refClass->getFileName();
         if (! file_exists($file)) {
-            throw new \Exception("Class Const Finder file not found: $file");
+            $this->throwException("file not found: $file");
         }
         $line = $refClass->getStartLine();
         if ($line <= 0) {
-            throw new \Exception("Class Const Finder line is invalid: $line");
+            $this->throwException("line is invalid: $line");
         }
 
         $content = file_get_contents($file);
@@ -46,7 +46,7 @@ class ClassConst extends Method implements Finder
         }
 
         if (! $startLine) {
-            throw new \Exception("Class Const Finder class not found: $class");
+            $this->throwException("class not found: $class");
         }
 
         $tokens = \PhpCTags\Pool\Token::getInstance()->fromContent($content);
@@ -67,7 +67,7 @@ class ClassConst extends Method implements Finder
         }
 
         if (0 == count($lines)) {
-            throw new \Exception("Class Const Finder no const found: $class::{$this->name}");
+            $this->throwException("no const found: $class::{$this->name}");
         }
 
         $rows = explode("\n", $content);
@@ -81,6 +81,6 @@ class ClassConst extends Method implements Finder
             }
         }
 
-        throw new \Exception("Class Const Finder no avaiable const: $class::{$this->name}");
+        $this->throwException("no avaiable const: $class::{$this->name}");
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class Const_ implements Finder
+class Const_ extends BaseFinder implements Finder
 {
     public $root;
     public $namespace;
@@ -18,7 +18,7 @@ class Const_ implements Finder
     public function validate()
     {
         if (! $this->name) {
-            throw new \Exception('Const Finder name is invalid');
+            $this->throwException('name is invalid');
         }
     }
 
@@ -34,7 +34,7 @@ class Const_ implements Finder
         }
 
         if (0 == count($positions)) {
-            throw new \Exception('no available symbol not found');
+            $this->throwException('no available symbol not found');
         }
 
         $this->logger->debug('positions found: '.json_encode($positions));
@@ -53,10 +53,10 @@ class Const_ implements Finder
         $output = exec($command, $outputs, $code);
 
         if (0 !== $code && 1 !== $code) {
-            throw new \Exception("execute ag search failed:[$code] $output");
+            $this->throwException("execute ag search failed:[$code] $output");
         }
         if (0 == count($outputs)) {
-            throw new \Exception('symbol not found, by command '.$command);
+            $this->throwException('symbol not found, by command '.$command);
         }
 
         $this->logger->debug('ag found positions: '.implode("\n", $outputs));

@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class Class_ implements Finder
+class Class_ extends BaseFinder implements Finder
 {
     public $namespace;
     public $name;
@@ -10,7 +10,7 @@ class Class_ implements Finder
     public function validate()
     {
         if (! $this->name) {
-            throw new \Exception('Class Finder name is invalid');
+            $this->throwException('name is invalid');
         }
     }
 
@@ -22,16 +22,16 @@ class Class_ implements Finder
         try {
             $refClass = new \ReflectionClass($class);
         } catch (\Exception $e) {
-            throw new \Exception('Reflection Class: '.$e->getMessage());
+            $this->throwException('Reflection Class: '.$e->getMessage());
         }
 
         $file = $refClass->getFileName();
         if (! file_exists($file)) {
-            throw new \Exception("Class Finder file not found: $file");
+            $this->throwException("file not found: $file");
         }
         $line = $refClass->getStartLine();
         if ($line <= 0) {
-            throw new \Exception("Class Finder line is invalid: $line");
+            $this->throwException("line is invalid: $line");
         }
 
         $rows = file($file);
