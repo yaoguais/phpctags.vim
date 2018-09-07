@@ -34,7 +34,7 @@
 
 - [x] method defined by class
 - [ ] method defined by class document comment
-- [ ] method defined by parent class
+- [x] method defined by parent class
 - [ ] method defined by parent class document comment
 - [x] method call by class::method()
 - [x] method call by self::method()
@@ -50,7 +50,7 @@
 
 - [x] class const property
 - [ ] class const property defined by document comment
-- [ ] class variable property
+- [x] class variable property
 - [ ] class variable property defined by document comment
 - [ ] class static variable property
 - [ ] class static variable property defined by document comment

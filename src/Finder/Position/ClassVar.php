@@ -2,7 +2,7 @@
 
 namespace PhpCTags\Finder\Position;
 
-class ClassConst extends Method implements Finder
+class ClassVar extends Method implements Finder
 {
     public function find()
     {
@@ -15,14 +15,14 @@ class ClassConst extends Method implements Finder
             $this->throwException('Reflection Class: '.$e->getMessage());
         }
 
-        $refConst = $refClass->getReflectionConstant($this->name);
-        if (! $refConst) {
-            $this->throwException("const not defined: {$this->name}");
+        $refVar = $refClass->getProperty($this->name);
+        if (! $refVar) {
+            $this->throwException("property not defined: {$this->name}");
         }
 
-        $refClass = $refConst->getDeclaringClass();
-        $pattern = sprintf('/const\s+%s\s*=/', $this->name);
+        $refClass = $refVar->getDeclaringClass();
+        $pattern = sprintf('/\$%s\s*[=;]/', $this->name);
 
-        return $this->findAttribute($refClass, $this->name, $pattern);
+        return $this->findAttribute($refClass, '$'.$this->name, $pattern);
     }
 }

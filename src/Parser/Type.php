@@ -55,6 +55,17 @@ class Type
             return $finder;
         }
 
+        $classVarParser = new \PhpCTags\Parser\Type\ClassVar();
+        list($ok, $name, $class, $namespace) = $classVarParser->parse($tokens, $idx, $content, $line);
+        if ($ok) {
+            $finder = new \PhpCTags\Finder\Position\ClassVar();
+            $finder->name = $name;
+            $finder->class = $class;
+            $finder->namespace = $namespace;
+
+            return $finder;
+        }
+
         $classParser = new \PhpCTags\Parser\Type\Class_();
         list($ok, $name, $namespace) = $classParser->parse($tokens, $idx, $content, $line);
         if ($ok) {

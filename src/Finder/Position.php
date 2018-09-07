@@ -35,6 +35,10 @@ class Position
             return $finder->find();
         }
 
+        if ($finder instanceof \PhpCTags\Finder\Position\ClassVar) {
+            return $finder->find();
+        }
+
         if ($finder instanceof \PhpCTags\Finder\Position\Class_) {
             return $finder->find();
         }
