@@ -13,16 +13,6 @@ class Type
             throw new \Exception("keyword not found: $keyword");
         }
 
-        $varParser = new \PhpCTags\Parser\Type\Variable();
-        list($ok) = $varParser->parse($tokens, $idx, $content, $line);
-        if ($ok) {
-            $finder = new \PhpCTags\Finder\Position\Variable();
-            $finder->tokens = $tokens;
-            $finder->index = $idx;
-
-            return $finder;
-        }
-
         $funcParser = new \PhpCTags\Parser\Type\Function_();
         list($ok, $name, $namespace) = $funcParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
@@ -66,6 +56,17 @@ class Type
             return $finder;
         }
 
+        $classStaticVarParser = new \PhpCTags\Parser\Type\ClassStaticVar();
+        list($ok, $name, $class, $namespace) = $classStaticVarParser->parse($tokens, $idx, $content, $line);
+        if ($ok) {
+            $finder = new \PhpCTags\Finder\Position\ClassStaticVar();
+            $finder->name = $name;
+            $finder->class = $class;
+            $finder->namespace = $namespace;
+
+            return $finder;
+        }
+
         $classParser = new \PhpCTags\Parser\Type\Class_();
         list($ok, $name, $namespace) = $classParser->parse($tokens, $idx, $content, $line);
         if ($ok) {
@@ -82,6 +83,16 @@ class Type
             $finder = new \PhpCTags\Finder\Position\Const_();
             $finder->name = $name;
             $finder->namespace = $namespace;
+
+            return $finder;
+        }
+
+        $varParser = new \PhpCTags\Parser\Type\Variable();
+        list($ok) = $varParser->parse($tokens, $idx, $content, $line);
+        if ($ok) {
+            $finder = new \PhpCTags\Finder\Position\Variable();
+            $finder->tokens = $tokens;
+            $finder->index = $idx;
 
             return $finder;
         }

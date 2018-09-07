@@ -15,12 +15,6 @@ class Position
 
         $finder = $typeParser->parse($content, $line, $column, $keyword);
 
-        if ($finder instanceof \PhpCTags\Finder\Position\Variable) {
-            $finder->file = $file;
-
-            return $finder->find();
-        }
-
         if ($finder instanceof \PhpCTags\Finder\Position\Function_) {
             $finder->root = $root;
 
@@ -39,12 +33,22 @@ class Position
             return $finder->find();
         }
 
+        if ($finder instanceof \PhpCTags\Finder\Position\ClassStaticVar) {
+            return $finder->find();
+        }
+
         if ($finder instanceof \PhpCTags\Finder\Position\Class_) {
             return $finder->find();
         }
 
         if ($finder instanceof \PhpCTags\Finder\Position\Const_) {
             $finder->root = $root;
+
+            return $finder->find();
+        }
+
+        if ($finder instanceof \PhpCTags\Finder\Position\Variable) {
+            $finder->file = $file;
 
             return $finder->find();
         }
