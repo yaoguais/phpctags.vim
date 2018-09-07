@@ -146,4 +146,51 @@ class Class_ implements Parser
 
         return [$name, $namespace ? $namespace : null];
     }
+
+    public function parseCaller($tokens, $idx, $content, $line)
+    {
+        $caller = null;
+        for ($i = $idx - 1; $i >= 0; --$i) {
+            $token = $tokens[$i];
+            $data = is_array($token) ? $token[1] : $token;
+            if (null === $caller && '' === trim($data)) {
+                continue;
+            }
+            if ('$this' == $data) {
+                $caller = null !== $caller ? null : $data;
+                break;
+            }
+            if ('\\' == $data || preg_match('/^[A-Za-z_]+[A-Za-z0-9_]*$/', $data)) {
+                $caller = $data.$caller;
+            } else {
+                break;
+            }
+        }
+
+        if (! $caller) {
+            return [false, null, null, null];
+        }
+
+        if ('self' == $caller || 'static' == $caller || 'parent' == $caller || '$this' == $caller) {
+            $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
+            for ($j = count($classes) - 1; $j >= 0; --$j) {
+                if ($classes[$j][3] <= $line) {
+                    if ('parent' == $caller) {
+                        list($class, $namespace) =
+                            $this->parseParent($classes[$j][0], $classes[$j][1]);
+
+                        return [true, $caller, $class, $namespace];
+                    }
+
+                    return [true, $caller, $classes[$j][0], $classes[$j][1]];
+                }
+            }
+
+            return [false, null, null, null];
+        }
+
+        $parts = explode('\\', $caller);
+
+        return [true, $caller, array_pop($parts), count($parts) > 0 ? implode('\\', $parts) : null];
+    }
 }

@@ -52,7 +52,7 @@
 - [ ] class const property defined by document comment
 - [x] class variable property
 - [ ] class variable property defined by document comment
-- [ ] class static variable property
+- [x] class static variable property
 - [ ] class static variable property defined by document comment
 
 

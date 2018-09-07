@@ -12,28 +12,6 @@ class ClassVar extends Class_ implements Parser
         }
 
         $l = count($tokens);
-        $objOp = null;
-
-        for ($i = $idx - 1; $i >= 0; --$i) {
-            $token = $tokens[$i];
-            $name = is_array($token) ? $token[0] : null;
-            $data = is_array($token) ? $token[1] : $token;
-
-            if ('' === trim($data)) {
-                continue;
-            }
-
-            if (null === $objOp && T_OBJECT_OPERATOR == $name) {
-                $objOp = $i;
-                continue;
-            }
-
-            if ('$this' !== $data || null === $objOp) {
-                return [false, null, null, null];
-            }
-            break;
-        }
-
         for ($i = $idx + 1; $i < $l; ++$i) {
             $token = $tokens[$i];
             $data = is_array($token) ? $token[1] : $token;
@@ -46,15 +24,33 @@ class ClassVar extends Class_ implements Parser
             break;
         }
 
-        $var = is_array($tokens[$idx]) ? $tokens[$idx][1] : $tokens[$idx];
+        $objOpIdx = null;
+        for ($i = $idx - 1; $i >= 0; --$i) {
+            $token = $tokens[$i];
+            $name = is_array($token) ? $token[0] : null;
+            $data = is_array($token) ? $token[1] : $token;
 
-        $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
-        for ($j = count($classes) - 1; $j >= 0; --$j) {
-            if ($classes[$j][3] <= $line) {
-                return [true, $var, $classes[$j][0], $classes[$j][1]];
+            if ('' === trim($data)) {
+                continue;
             }
+
+            if (null === $objOpIdx && T_OBJECT_OPERATOR == $name) {
+                $objOpIdx = $i;
+            }
+            break;
         }
 
-        return [false, null, null, null];
+        if (! $objOpIdx) {
+            return [false, null, null, null];
+        }
+
+        list($ok, $caller, $class, $namespace) = $this->parseCaller($tokens, $objOpIdx, $content, $line);
+        if (! $ok || '$this' != $caller) {
+            return [false, null, null, null];
+        }
+
+        $var = is_array($tokens[$idx]) ? $tokens[$idx][1] : $tokens[$idx];
+
+        return [true, $var, $class, $namespace];
     }
 }

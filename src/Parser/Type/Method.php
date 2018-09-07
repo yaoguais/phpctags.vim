@@ -46,48 +46,18 @@ class Method extends Class_ implements Parser
 
     public function parsePaamayimNekudotayim($tokens, $idx, $hitToken, $content, $line)
     {
+        list($ok, $caller, $class, $namespace) = $this->parseCaller($tokens, $idx, $content, $line);
+        if (! $ok || '$this' == $caller) {
+            return [false, null, null, null];
+        }
+
         $method = is_array($hitToken) ? $hitToken[1] : $hitToken;
-
-        $caller = null;
-        for ($i = $idx - 1; $i >= 0; --$i) {
-            $token = $tokens[$i];
-            $data = is_array($token) ? $token[1] : $token;
-            if (null === $caller && '' === trim($data)) {
-                continue;
-            }
-            if ('\\' == $data || preg_match('/^[A-Za-z_]+[A-Za-z0-9_]*$/', $data)) {
-                $caller = $data.$caller;
-            } else {
-                break;
-            }
-        }
-
-        if (! $caller) {
-            return [false, null, null, null];
-        }
-
-        // If class has the same method as parent,
-        // and it will find the child one currently.
-        // fix later for "parent".
         if ('self' == $caller || 'static' == $caller || 'parent' == $caller) {
-            $classes = \PhpCTags\Pool\Class_::getInstance()->fromContent($content);
-            for ($j = count($classes) - 1; $j >= 0; --$j) {
-                if ($classes[$j][3] <= $line) {
-                    if ('parent' == $caller) {
-                        list($class, $namespace) =
-                            $this->parseParent($classes[$j][0], $classes[$j][1]);
-
-                        return [true, $method, $class, $namespace];
-                    }
-
-                    return [true, $method, $classes[$j][0], $classes[$j][1]];
-                }
-            }
-
-            return [false, null, null, null];
+            return [true, $method, $class, $namespace];
         }
 
         $nsParser = new \PhpCTags\Parser\Namespace_();
+        $caller = $namespace ? $namespace.'\\'.$class : $class;
 
         return $nsParser->parseMethod($method, $caller, $content, $line);
     }
