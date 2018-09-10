@@ -64,4 +64,52 @@ class ClassConstTest extends \Tests\BaseTest
             $this->assertEquals($case['output']->column, $position->column, "case #$i check column");
         }
     }
+
+    public function testGetDefinedReflectionClass()
+    {
+        $code = '<?php
+namespace FooRef;
+interface Qux
+{
+    const QUX = "QUX";
+}
+interface Quux extends Qux
+{
+    const QUUX = "QUUX";
+}
+class Foo implements Quux
+{
+    const FOO = "FOO";
+}
+class Bar extends Foo
+{
+    const BAR = "BAR";
+}
+class Baz extends Bar
+{
+
+}
+';
+
+        eval(substr($code, strlen('<?php')));
+
+        $cases = [
+            [['FOO', 'Baz', 'FooRef'], ['Foo', 'FooRef']],
+            [['BAR', 'Baz', 'FooRef'], ['Bar', 'FooRef']],
+            [['QUX', 'Baz', 'FooRef'], ['Qux', 'FooRef']],
+            [['QUUX', 'Baz', 'FooRef'], ['Quux', 'FooRef']],
+        ];
+
+        foreach ($cases as $i => $case) {
+            $finder = new \PhpCTags\Finder\Position\ClassConst();
+            $class = $case[0][2] ? $case[0][2].'\\'.$case[0][1] : $case[0][1];
+            $refClass = new \ReflectionClass($class);
+            $refDefineClass = $finder->getDefinedClassReflection($case[0][0], $refClass);
+            $name = $refDefineClass->getShortName();
+            $namespace = $refDefineClass->getNamespaceName();
+            $namespace = $namespace ? $namespace : null;
+            $this->assertEquals($case[1][0], $name, "case #$i: check class name");
+            $this->assertEquals($case[1][1], $namespace, "case #$i: check class namespace");
+        }
+    }
 }
