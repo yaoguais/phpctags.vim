@@ -1,7 +1,12 @@
 # phpctags
 
-An enhanced definition and declaration jumper written 
-in pure PHP for vim-php. When we work on a huge project, 
+> An enhanced definition and declaration jumper written 
+in pure PHP for vim-php. 
+
+[![Build Status](https://travis-ci.org/yaoguais/phpctags.vim.svg?branch=master)](https://travis-ci.org/yaoguais/phpctags.vim)
+[![codecov](https://codecov.io/gh/yaoguais/phpctags.vim/branch/master/graph/badge.svg)](https://codecov.io/gh/yaoguais/phpctags.vim)
+
+When we work on a huge project, 
 which would has hundreds of the same tags, and it is hard 
 to choose the correct tag.
 
