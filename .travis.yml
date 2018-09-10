@@ -18,5 +18,8 @@ before_script:
 script:
     - vendor/bin/php-cs-fixer fix --config=.php_cs --quiet --dry-run
     - bin/PHPJumpToDefinition --file tests/data/function/call_function.php --line 8 --column 1 --keyword "this_is_a_check_function"
-    - vendor/bin/phpunit --verbose
+    - vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
     - php buildPHAR.php
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
