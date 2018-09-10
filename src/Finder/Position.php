@@ -71,6 +71,10 @@ class Position
 
     public function getAutoloadFile($root, $file, $autoload)
     {
+        if ($autoload && file_exists($autoload)) {
+            return realpath($autoload);
+        }
+
         $autoload = realpath($root.DIRECTORY_SEPARATOR.$autoload);
         if (! file_exists($autoload)) {
             throw new \Exception('Finder autoload file is not exist');

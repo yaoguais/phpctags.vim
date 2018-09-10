@@ -8,11 +8,6 @@ class Class_
 
     protected $caches = [];
 
-    public function fromFile($file)
-    {
-        return $this->fromContent(File::getInstance()->fromFile($file));
-    }
-
     public function fromContent($content)
     {
         $key = md5($content);

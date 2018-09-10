@@ -106,18 +106,6 @@ class Token
         return $ranges;
     }
 
-    public function isInRange($tokens, $types, $idx)
-    {
-        $ranges = $this->parseRange($tokens, $types);
-        foreach ($ranges as $range) {
-            if ($range[1] <= $idx && $idx <= $range[2]) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public static function isNewLine($token)
     {
         return is_array($token) && T_NEW_LINE === $token[0];
