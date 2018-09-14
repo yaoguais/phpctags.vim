@@ -3,7 +3,7 @@
 ## constant
 
 - [x] constant defined by function define()
-- [ ] constant defined by keyword const
+- [x] constant defined by keyword const
 
 ## variable
 
@@ -49,40 +49,28 @@
 ## property
 
 - [x] class const property
-- [ ] class const property defined by document comment
 - [x] class variable property
 - [ ] class variable property defined by document comment
 - [x] class static variable property
-- [ ] class static variable property defined by document comment
 
 
 ### constant defined by function define()
 
 ```php
-index.php:
-
 define('CONSTANT', 'CONSTANT STRING');
+define('Foo\\CONSTANT', 'CONSTANT STRING');
 ```
 
 ### constant defined by keyword const
 
 ```php
-foo.php:
-
-const CONSTANT = 'CONSTANT STRING';
-
-bar.php:
-
 namespace Foo;
-
 const CONSTANT = 'CONSTANT STRING';
 ```
 
 ### variable in main function
 
 ```php
-index.php:
-
 $foo = $bar;
 $bar = $baz;
 $baz = $qux;
@@ -91,8 +79,6 @@ $baz = $qux;
 ### variable in global function
 
 ```php
-foo.php:
-
 function foo() {
     $foo = $bar;
     $bar = $baz;
@@ -103,8 +89,6 @@ function foo() {
 ### variable in class method
 
 ```php
-foo.php:
-
 class Foo {
     function bar() {
         $foo = $bar;
@@ -117,8 +101,6 @@ class Foo {
 ### variable in closure function
 
 ```php
-foo.php:
-
 $foo = function () {
     $foo = $bar;
     $bar = $baz;
@@ -129,8 +111,6 @@ $foo = function () {
 ### variable in comment
 
 ```php
-foo.php:
-
 /** @var string $foo */
 /** @var $foo   string */
 /** @var \Foo\Bar $bar */
@@ -140,8 +120,6 @@ foo.php:
 ### variable in function parameters
 
 ```php
-foo.php:
-
 function foo($bar) {
     $baz = $bar;
     $qux = $baz;
@@ -151,8 +129,6 @@ function foo($bar) {
 ### variable in function document comment
 
 ```php
-foo.php:
-
 /**
  * @param \Foo\Bar $bar
  * @return \stdClass
@@ -165,8 +141,6 @@ function foo($bar) {
 ### variable in method parameters
 
 ```php
-foo.php:
-
 class Foo {
     function bar(\Foo\Bar $baz) {
         $qux = $baz;
@@ -177,8 +151,6 @@ class Foo {
 ### variable in method document comment
 
 ```php
-foo.php:
-
 class Foo {
     /**
      * @param \Foo\Bar $bar
@@ -194,8 +166,6 @@ class Foo {
 ### variable in closure function parameters
 
 ```php
-foo.php:
-
 $foo = function (\Foo\Bar $bar) {
     $baz = $bar;
     return $baz;
@@ -205,8 +175,6 @@ $foo = function (\Foo\Bar $bar) {
 ### variable in closure function use parameters
 
 ```php
-foo.php:
-
 $foo = function () use (\Foo\Bar $bar) {
     $baz = $bar;
     return $baz;
@@ -216,8 +184,6 @@ $foo = function () use (\Foo\Bar $bar) {
 ### global function call
 
 ```php
-foo.php:
-
 function foo() {
 
 }
@@ -228,8 +194,6 @@ foo();
 ### function returns
 
 ```php
-foo.php:
-
 /**
  * @param \Foo\Bar $bar
  * @return \Foo\Bar
@@ -242,8 +206,6 @@ function foo($bar) {
 ### class
 
 ```php
-foo.php:
-
 class Foo {
 
 }
@@ -252,8 +214,6 @@ class Foo {
 ### trait
 
 ```php
-foo.php:
-
 trait Foo {
 
 }
@@ -262,8 +222,6 @@ trait Foo {
 ### interface
 
 ```php
-foo.php:
-
 interface Foo {
 
 }
@@ -272,8 +230,6 @@ interface Foo {
 ### method defined by class
 
 ```php
-foo.php:
-
 class Foo {
     function bar() {
     }
@@ -286,8 +242,6 @@ $foo->bar();
 ### method defined by class document comment
 
 ```php
-foo.php:
-
 /**
  * Class Foo.
  *
@@ -304,8 +258,6 @@ $foo->bar('bar');
 ### method defined by parent class
 
 ```php
-foo.php:
-
 class Foo {
     public function foo() {
     
@@ -322,8 +274,6 @@ $bar->foo();
 ### method defined by parent class document comment
 
 ```php
-foo.php:
-
 /**
  * Class Foo.
  *
@@ -341,8 +291,6 @@ $bar->foo('foo');
 ### method call by class::method()
 
 ```php
-foo.php:
-
 class Foo() {
     static function foo() {
     }
@@ -353,8 +301,6 @@ Foo::foo();
 ### method call by self::method()
 
 ```php
-foo.php:
-
 class Foo() {
     static function foo() {
     }
@@ -369,8 +315,6 @@ Foo::bar();
 ### method call by static::method()
 
 ```php
-foo.php:
-
 class Foo() {
     static function foo() {
     }
@@ -385,8 +329,6 @@ Foo::bar();
 ### method call by parent::method()
 
 ```php
-foo.php:
-
 class Foo() {
     static function foo() {
     }
@@ -399,8 +341,6 @@ Bar::foo();
 ### method call by $this->method()
 
 ```php
-foo.php:
-
 class Foo {
     public function foo() {
     }
@@ -415,8 +355,6 @@ $foo->bar();
 ### method call by (new Class())->method()
 
 ```php
-foo.php:
-
 class Foo {
     public function foo() {
     }
@@ -429,8 +367,6 @@ $bar->foo();
 ### method call by anonymous class
 
 ```php
-foo.php:
-
 $foo = new class {
     function foo() {
     }
@@ -441,8 +377,6 @@ $foo->foo();
 ### method call by function returns
 
 ```php
-foo.php:
-
 function foo() {
     return new Bar();
 }
@@ -459,8 +393,6 @@ foo()->bar();
 ### method call by other method returns
 
 ```php
-foo.php:
-
 class Foo {
     function foo() {
         return new Bar();
@@ -477,8 +409,6 @@ $foo->foo()->bar();
 ### class const property
 
 ```php
-foo.php:
-
 class Foo {
     const Bar = 0;
 }
@@ -487,20 +417,40 @@ echo Foo::Bar;
 
 ### class const property defined by document comment
 
-    // TODO
+```php
+/**
+ * show off @property, @property-read, @property-write
+ *
+ * @property int $foo the foo prop
+ */
+class Foo
+{
+
+}
+```
 
 ### class variable property
 
-    // TODO
-    
-### class variable property defined by document comment
-
-    // TODO
+```php
+namespace Foo
+{
+    class Bar
+    {
+        public $baz;
+        public $qux;
+    }
+}
+```
 
 ### class static variable property
 
-    // TODO
-    
-### class static variable property defined by document comment
-
-    // TODO
+```php
+namespace Foo
+{
+    class Bar
+    {
+        static $baz;
+        public static $qux;
+    }
+}
+```
