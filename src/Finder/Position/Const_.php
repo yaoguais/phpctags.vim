@@ -26,7 +26,7 @@ class Const_ extends BaseFinder implements Finder
     {
         $this->validate();
 
-        $positions = null;
+        $positions = [];
         try {
             $positions = $this->findFromFunctionDefine();
         } catch (\Exception $e) {
