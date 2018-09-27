@@ -129,6 +129,10 @@ namespace Foo {
         }
     }
     class Baz extends Bar {
+        public function __construct($version = null)
+        {
+
+        }
         public function bar() {
             echo "Baz->bar()\n";
         }
@@ -143,12 +147,20 @@ namespace Foo {
     $d = $b;
     $e = $d;
     $e->bar();
+
+    $f = new \\Foo\\Baz("1.0");
+    $f->foo();
+    
+    $g = new \\Foo\\Baz(PHP_VERSION);
+    $g->foo();
 }';
 
         $cases = [
-            [[$code, 138, 20], [true, 'foo', 'Bar', 'Foo']],
-            [[$code, 146, 21], [true, 'bar', 'Bar', 'Foo']],
-            [[$code, 172, 25], [true, 'bar', 'Baz', 'Foo']],
+            [[$code, 159, 24], [true, 'foo', 'Bar', 'Foo']],
+            [[$code, 167, 25], [true, 'bar', 'Bar', 'Foo']],
+            [[$code, 193, 29], [true, 'bar', 'Baz', 'Foo']],
+            [[$code, 218, 32], [true, 'foo', 'Baz', 'Foo']],
+            [[$code, 244, 35], [true, 'foo', 'Baz', 'Foo']],
         ];
 
         foreach ($cases as $i => $case) {

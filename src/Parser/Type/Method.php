@@ -167,7 +167,7 @@ class Method extends Class_ implements Parser
                 $caller = '';
                 continue;
             }
-            if ('(' == $data) {
+            if ('(' == $data && '' === $caller) {
                 continue;
             }
             $name = is_array($token) ? $token[0] : null;
