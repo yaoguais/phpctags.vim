@@ -8,7 +8,10 @@ class Position
     {
         $root = $this->getRoot($root, $file, $autoload);
 
-        require_once $this->getAutoloadFile($root, $file, $autoload);
+        try {
+            @include_once $this->getAutoloadFile($root, $file, $autoload);
+        } catch (\Exception $e) {
+        }
 
         $typeParser = new \PhpCTags\Parser\Type();
         $content = \PhpCTags\Pool\File::getInstance()->fromFile($file);
